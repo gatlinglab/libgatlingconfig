@@ -1,0 +1,4 @@
+package gatlingconfig
+
+func NewGatlingConfig() {
+  }

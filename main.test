@@ -1,0 +1,17 @@
+package main
+
+import "fmt"
+
+var G_AppName = "gatlingconfig"
+
+func main() {
+	err := GetSingleGatlingConfig().Initialize(G_AppName)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// for k, v := range GetSingleGatlingConfig().kValue {
+	// 	fmt.Println(k, "..", v)
+	// }
+}

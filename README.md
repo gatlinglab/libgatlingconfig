@@ -1,0 +1,2 @@
+# libgatlingconfig
+config library

@@ -1,4 +1,4 @@
-package github.com/gatlinglab/libgatlingconfig
+package libgatlingconfig
 
 import (
 	"bufio"

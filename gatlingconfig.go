@@ -81,7 +81,9 @@ func (pInst *CGatlingConfig) loadServerConfig(serverUrl, xkey string) int {
 	if err != nil {
 		return -1
 	}
-	req.Header.Add("X-API-KEY", xkey)
+	if xkey != "" {
+		req.Header.Add("X-API-KEY", xkey)
+	}
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return -2

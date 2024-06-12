@@ -17,6 +17,7 @@ type CGatlingConfig struct {
 
 const c_Key_ConfigServerUrl = "CONFIGSERVERURL"
 const c_Key_ConfigServerToken = "CONFIGSERVERTOKEN"
+const c_Key_ConfigAPPToken = "APPTOKEN"
 
 var g_singleGatlingConfig *CGatlingConfig = &CGatlingConfig{kValue: map[string]string{}}
 
@@ -33,8 +34,13 @@ func (pInst *CGatlingConfig) Initialize(appName string) error {
 	pInst.listEnv()
 	pInst.loadAppConfig(appName)
 
+	token := pInst.kValue[c_Key_ConfigServerToken]
+	if token == "" {
+		token = pInst.kValue[c_Key_ConfigAPPToken]
+	}
+
 	if pInst.kValue[c_Key_ConfigServerUrl] != "" {
-		pInst.loadServerConfig(pInst.kValue[c_Key_ConfigServerUrl], pInst.kValue[c_Key_ConfigServerToken])
+		pInst.loadServerConfig(pInst.kValue[c_Key_ConfigServerUrl], token)
 	}
 
 	return nil

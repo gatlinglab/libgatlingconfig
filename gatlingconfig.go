@@ -16,8 +16,8 @@ type CGatlingConfig struct {
 }
 
 const c_Key_ConfigServerUrl = "CONFIGSERVERURL"
-const c_Key_ConfigServerToken = "CONFIGSERVERTOKEN"
-const c_Key_ConfigAPPToken = "APPTOKEN"
+const c_Key_ConfigServerToken = "CONFIGSERVERTOKEN" // config server token is for X-API-KEY
+const c_Key_ConfigAPPToken = "APPTOKEN"             // app token for the kv key;
 
 var g_singleGatlingConfig *CGatlingConfig = &CGatlingConfig{kValue: map[string]string{}}
 

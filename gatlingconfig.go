@@ -34,13 +34,12 @@ func (pInst *CGatlingConfig) Initialize(appName string) error {
 	pInst.listEnv()
 	pInst.loadAppConfig(appName)
 
-	token := pInst.kValue[c_Key_ConfigServerToken]
-	if token == "" {
-		token = pInst.kValue[c_Key_ConfigAPPToken]
-	}
+	servertoken := pInst.kValue[c_Key_ConfigServerToken]
+	appToken := pInst.kValue[c_Key_ConfigAPPToken]
+	serverUrl := pInst.kValue[c_Key_ConfigServerUrl]
 
-	if pInst.kValue[c_Key_ConfigServerUrl] != "" {
-		pInst.loadServerConfig(pInst.kValue[c_Key_ConfigServerUrl], token)
+	if serverUrl != "" && appToken != "" {
+		pInst.loadServerConfig(serverUrl, servertoken, appToken)
 	}
 
 	return nil
@@ -82,13 +81,17 @@ func (pInst *CGatlingConfig) loadAppConfig(appName string) int {
 
 	return iCount
 }
-func (pInst *CGatlingConfig) loadServerConfig(serverUrl, xkey string) int {
+func (pInst *CGatlingConfig) loadServerConfig(serverUrl, serverToken, appToken string) int {
+	if serverUrl[len(serverUrl)-1] != '/' {
+		serverUrl += "/"
+	}
+	serverUrl += appToken
 	req, err := http.NewRequest(http.MethodGet, serverUrl, nil)
 	if err != nil {
 		return -1
 	}
-	if xkey != "" {
-		req.Header.Add("X-API-KEY", xkey)
+	if serverToken != "" {
+		req.Header.Add("X-API-KEY", serverToken)
 	}
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {

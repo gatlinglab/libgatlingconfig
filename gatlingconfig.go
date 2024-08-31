@@ -2,6 +2,7 @@ package libgatlingconfig
 
 import (
 	"bufio"
+	"errors"
 	"io"
 	"net/http"
 	"os"
@@ -26,6 +27,9 @@ func GetSingleGatlingConfig() *CGatlingConfig {
 }
 
 func (pInst *CGatlingConfig) Initialize(appName string) error {
+	if appName == "" {
+		return errors.New("appname is empty")
+	}
 	file, _ := exec.LookPath(os.Args[0])
 	path, _ := filepath.Abs(file)
 	index := strings.LastIndex(path, string(os.PathSeparator))
@@ -38,8 +42,13 @@ func (pInst *CGatlingConfig) Initialize(appName string) error {
 	appToken := pInst.kValue[c_Key_ConfigAPPToken]
 	serverUrl := pInst.kValue[c_Key_ConfigServerUrl]
 
+	if serverUrl != "" {
+		pInst.loadServerConfig(serverUrl, servertoken, appName)
+	}
+
 	if serverUrl != "" && appToken != "" {
 		pInst.loadServerConfig(serverUrl, servertoken, appToken)
+		pInst.loadServerConfig(serverUrl, servertoken, appName+"-"+appToken)
 	}
 
 	return nil

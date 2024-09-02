@@ -47,7 +47,6 @@ func (pInst *CGatlingConfig) Initialize(appName string) error {
 	}
 
 	if serverUrl != "" && appToken != "" {
-		pInst.loadServerConfig(serverUrl, servertoken, appToken)
 		pInst.loadServerConfig(serverUrl, servertoken, appName+"-"+appToken)
 	}
 

@@ -111,6 +111,8 @@ func (pInst *CGatlingConfig) loadServerConfig(serverUrl, serverToken, appToken s
 		return -3
 	}
 	strConect := strings.ReplaceAll(string(content), "\r", "\n")
+	strConect = strings.ReplaceAll(strConect, "█", "\n")
+	strConect = strings.ReplaceAll(strConect, "\n\n", "\n")
 	strConect = strings.ReplaceAll(strConect, "\n\n", "\n")
 	strList := strings.Split(strConect, "\n")
 	var iCount = 0

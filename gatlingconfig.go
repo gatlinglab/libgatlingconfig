@@ -35,6 +35,7 @@ func (pInst *CGatlingConfig) Initialize(appName string) error {
 	path, _ := filepath.Abs(file)
 	index := strings.LastIndex(path, string(os.PathSeparator))
 	pInst.appPath = path[:index+1]
+	
 
 	pInst.listEnv()
 	pInst.loadAppConfig(appName)

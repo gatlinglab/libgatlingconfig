@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"strings"
 )
@@ -72,7 +73,8 @@ func (pInst *CGatlingConfig) listEnv() int {
 
 func (pInst *CGatlingConfig) loadAppConfig(appName string) int {
 	var iCount = 0
-	f, err := os.Open(appName + ".cfg")
+	cfgPath := path.Join(pInst.appPath, appName+".cfg")
+	f, err := os.Open(cfgPath)
 	if err != nil {
 		return -1
 	}
